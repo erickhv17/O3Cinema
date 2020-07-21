@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import NavBar from "./navBar";
 import { connect } from "react-redux";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "../styles/home.css";
+import error from "../styles/error.png";
 
 class Home extends Component {
   render() {
@@ -11,14 +12,16 @@ class Home extends Component {
       movies && movies.length ? (
         movies.map((movie, index) => {
           return (
-            <Card key={index}>
-              <Card.Header as="h5">{movie.Title}</Card.Header>
+            <Card style={{ display: "flex", flexDirection: "row" }} key={index}>
+              <Card.Img
+                style={{ flex: 1 }}
+                width="80%"
+                className="card-image"
+                src={movie.Poster !== "N/A" ? movie.Poster : error}
+              />
               <Card.Body>
-                <Card.Img
-                  variant="left"
-                  src={movie.Poster ? movie.Poster : ""}
-                />
-                <Card.Title> {movie.Released}</Card.Title>
+                <Card.Title> {movie.Title}</Card.Title>
+                <Card.Subtitle> {movie.Released}</Card.Subtitle>
                 <Card.Text>{movie.Plot}</Card.Text>
                 <Link to={"/" + movie.imdbID}>
                   <Button variant="primary">More Details</Button>
@@ -32,7 +35,6 @@ class Home extends Component {
       );
     return (
       <div>
-        <NavBar />
         <div className="container">
           <h4 className="center">Search Results</h4>
           {listMovies}

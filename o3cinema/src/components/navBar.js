@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { searchMovie } from "../actions/movieActions";
+import { fetchMovie } from "../actions/movieActions";
 import { connect } from "react-redux";
 import {
   Navbar,
@@ -9,6 +9,7 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 class NavBar extends Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class NavBar extends Component {
 
   handleSummit = (e) => {
     e.preventDefault();
+
+    this.props.history.push("/");
     this.props.searchMovie(this.state.valueSeach);
   };
 
@@ -66,8 +69,8 @@ class NavBar extends Component {
 
 const mapDispatchToProps = (dispach) => {
   return {
-    searchMovie: (value) => dispach(searchMovie(value)),
+    searchMovie: (value) => dispach(fetchMovie(value)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default withRouter(connect(null, mapDispatchToProps)(NavBar));
